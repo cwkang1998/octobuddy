@@ -24,11 +24,11 @@ export default function Home() {
           <AvatarFallback>UA</AvatarFallback>
         </Avatar>
       </div>
-      <Button className="w-full bg-primary text-primary-foreground" onClick={() => router.push('/bill')}>Create Expenses</Button>
+      <Button className="w-full" variant="outline" onClick={() => router.push('/bill')}>Create Expenses</Button>
       <div>
         <h2 className="text-lg font-bold">Debts</h2>
         <Card className="mb-2 mt-2">        
-            <Button className="w-full bg-primary text-primary-foreground" onClick={() => router.push('/creategroup')}>Settle All Balances</Button>
+            <Button className="w-full bg-primary text-primary-foreground" onClick={() => router.push('/payment')}>Settle All Balances</Button>
         </Card>
 
         <div className="space-y-4">
