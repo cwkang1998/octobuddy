@@ -5,6 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
+    "main-app:dev": "pnpm --filter 'main-app' dev",
+    "main-app:start": "pnpm --filter 'main-app' start",
 		"check": "pnpm biome check --write **/*.ts"
 	},
 	"keywords": [],
