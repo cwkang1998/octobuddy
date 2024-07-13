@@ -11,35 +11,25 @@ import { useRouter } from "next/navigation";
 import type { JSX, SVGProps } from "react";
 
 export default function Home() {
-	const router = useRouter();
-	return (
-		<div className="p-4 space-y-6">
-			<div className="flex justify-between items-center">
-				<div>
-					<p className="text-sm text-muted-foreground">Total Debt Due</p>
-					<h1 className="text-4xl font-bold">$65.74</h1>
-				</div>
-				<Avatar>
-					<AvatarImage src="/placeholder-user.jpg" />
-					<AvatarFallback>UA</AvatarFallback>
-				</Avatar>
-			</div>
-			<Button
-				className="w-full bg-primary text-primary-foreground"
-				onClick={() => router.push("/addtransaction")}
-			>
-				Create Expenses
-			</Button>
-			<div>
-				<h2 className="text-lg font-bold">Debts</h2>
-				<Card className="mb-2 mt-2">
-					<Button
-						className="w-full bg-primary text-primary-foreground"
-						onClick={() => router.push("/creategroup")}
-					>
-						Settle All Balances
-					</Button>
-				</Card>
+    const router = useRouter();
+  return (
+    <div className="p-4 space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <p className="text-sm text-muted-foreground">Total Debt Due</p>
+          <h1 className="text-4xl font-bold">$65.74</h1>
+        </div>
+        <Avatar>
+          <AvatarImage src="/placeholder-user.jpg" />
+          <AvatarFallback>UA</AvatarFallback>
+        </Avatar>
+      </div>
+      <Button className="w-full bg-primary text-primary-foreground" onClick={() => router.push('/bill')}>Create Expenses</Button>
+      <div>
+        <h2 className="text-lg font-bold">Debts</h2>
+        <Card className="mb-2 mt-2">        
+            <Button className="w-full bg-primary text-primary-foreground" onClick={() => router.push('/creategroup')}>Settle All Balances</Button>
+        </Card>
 
 				<div className="space-y-4">
 					{Array(4)

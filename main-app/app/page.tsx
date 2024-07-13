@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import ContactsList from "./components/contacts";
 import CreateGroup from "./components/createGroup";
 import GroupTransactions from "./components/groupTxn";
