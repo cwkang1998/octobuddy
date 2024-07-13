@@ -8,3 +8,7 @@ libs = ["lib"]
 [rpc_endpoints]
 base_sepolia = "${BASE_SEPOLIA_URL}" 
 sepolia = "${SEPOLIA_URL}" 
+
+[etherscan]
+base_sepolia = { key = "${BASESCAN_SEPOLIA_KEY}", url="https://api-sepolia.basescan.org/api" }
+sepolia = { key = "${ETHERSCAN_SEPOLIA_KEY}", url="https://api-sepolia.etherscan.io/api" }
