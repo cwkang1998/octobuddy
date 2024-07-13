@@ -211,10 +211,12 @@ export default function Home() {
         
         <div>
           <h2 className="text-lg font-bold mt-4">Receivables</h2>
+          <div className="space-y-4">
+
           {receivables.map((receivable, index) => (
             <Card
-              key={index}
-              className="flex justify-between items-center p-4 bg-muted rounded-lg"
+            key={index}
+            className="flex justify-between items-center p-4 bg-muted rounded-lg"
             >
               <div>
                 <h3 className="text-base font-semibold">
@@ -230,6 +232,7 @@ export default function Home() {
               {/* <ChevronRightIcon className="w-6 h-6 text-muted-foreground" /> */}
             </Card>
           ))}
+          </div>
         </div>
       </div>
     </div>
