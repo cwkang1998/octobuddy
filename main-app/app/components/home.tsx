@@ -24,6 +24,12 @@ export default function Home() {
 					<AvatarFallback>UA</AvatarFallback>
 				</Avatar>
 			</div>
+			<Button
+				className="w-full bg-primary text-primary-foreground"
+				onClick={() => router.push("/addtransaction")}
+			>
+				Create Expenses
+			</Button>
 			<div>
 				<h2 className="text-lg font-bold">Debts</h2>
 				<Card className="mb-2 mt-2">
