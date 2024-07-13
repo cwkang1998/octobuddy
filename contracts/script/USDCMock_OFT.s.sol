@@ -6,6 +6,38 @@ import { USDCMock_OFT } from "../src/USDCMock_OFT.sol";
 import { SendParam } from "@layerzerolabs/lz-evm-oapp-v2/contracts/oft/interfaces/IOFT.sol";
 import { MessagingFee } from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/ILayerZeroEndpointV2.sol";
 import { OptionsBuilder } from "@layerzerolabs/lz-evm-oapp-v2/contracts/oapp/libs/OptionsBuilder.sol";
+import { EnforcedOptionParam } from "@layerzerolabs/lz-evm-oapp-v2/contracts/oapp/interfaces/IOAppOptionsType3.sol";
+
+library MsgCodec {
+    uint8 internal constant VANILLA_TYPE = 1;
+    uint8 internal constant COMPOSED_TYPE = 2;
+    uint8 internal constant ABA_TYPE = 3;
+    uint8 internal constant COMPOSED_ABA_TYPE = 4;
+
+    uint8 internal constant MSG_TYPE_OFFSET = 0;
+    uint8 internal constant SRC_EID_OFFSET = 1;
+    uint8 internal constant VALUE_OFFSET = 5;
+
+    function encode(uint8 _type, uint32 _srcEid) internal pure returns (bytes memory) {
+        return abi.encodePacked(_type, _srcEid);
+    }
+
+    function encode(uint8 _type, uint32 _srcEid, uint256 _value) internal pure returns (bytes memory) {
+        return abi.encodePacked(_type, _srcEid, _value);
+    }
+
+    function msgType(bytes calldata _message) internal pure returns (uint8) {
+        return uint8(bytes1(_message[MSG_TYPE_OFFSET:SRC_EID_OFFSET]));
+    }
+
+    function srcEid(bytes calldata _message) internal pure returns (uint32) {
+        return uint32(bytes4(_message[SRC_EID_OFFSET:VALUE_OFFSET]));
+    }
+
+    function value(bytes calldata _message) internal pure returns (uint256) {
+        return uint256(bytes32(_message[VALUE_OFFSET:]));
+    }
+}
 
 contract USDCMock_OFTScript is Script {
 	using OptionsBuilder for bytes;
@@ -42,14 +74,28 @@ contract USDCMock_OFTScript is Script {
     }
 
 	function run_test() external {
+		// Setup deployed contracts
 		USDCMock_OFT usdc_sepolia = USDCMock_OFT(0x6C9834A1C679c6a156fe5071d6Fd3d3648efFB9f);
 		USDCMock_OFT usdc_base = USDCMock_OFT(0x4C0b9173e3bd1F98D9E0de6Af63618A73A642BDa);
 
+		// Select fork of source chain
 		vm.selectFork(sepolia);
 		vm.startBroadcast(deployerPrivateKey);
 
+		// Mint test tokens
 		usdc_sepolia.mint(100000000000000000000);
 
+		// Build and set enforced options
+		bytes memory options = OptionsBuilder.newOptions().addExecutorLzReceiveOption(60000, 0);
+		EnforcedOptionParam[] memory enforcedOptions = new EnforcedOptionParam[](1);
+		enforcedOptions[0] = EnforcedOptionParam({
+			eid: eidBaseSepolia,
+			msgType: MsgCodec.VANILLA_TYPE,
+			options: options
+		});
+		usdc_sepolia.setEnforcedOptions(enforcedOptions);
+
+		// Build SendParam and quote fees
 		SendParam memory sendParam = SendParam({
 			dstEid: eidBaseSepolia,
 			to: bytes32(uint256(uint160(targetAddr))),
@@ -59,15 +105,10 @@ contract USDCMock_OFTScript is Script {
 			composeMsg: "",
 			oftCmd: ""
 		});
-
-		// MessagingFee fee = MessagingFee({
-		// 	nativeFee: 0,
-		// 	lzTokenFee: 0
-		// });
-
-		// bytes memory options = OptionsBuilder.newOptions().addExecutorLzReceiveOption(50000, 0);
-
 		MessagingFee memory fee = usdc_sepolia.quoteSend(sendParam, false);
+
+		// Try sending OFT
+		usdc_sepolia.send{value: fee.nativeFee}(sendParam, fee, deployer);
 
 		vm.stopBroadcast();
 	}
