@@ -1,11 +1,19 @@
+"use client";
 /**
  * v0 by Vercel.
  * @see https://v0.dev/t/clCTL6mRGzE
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 export default function Payment() {
+    
+    const searchParams = useSearchParams()
+ 
+  const amount = searchParams.get('amount')
+
   return (
     <div className="flex flex-col h-full w-full bg-background text-foreground p-6 md:p-8 lg:p-10">
       <div className="mb-6 md:mb-8 lg:mb-10">
@@ -14,7 +22,7 @@ export default function Payment() {
       <div className="mb-6 md:mb-8 lg:mb-10 bg-card rounded-md p-4 md:p-6 lg:p-8 shadow-md">
         <div className="flex items-center justify-between mb-4 md:mb-6 lg:mb-8">
           <h2 className="text-lg font-semibold">Total Payment</h2>
-          <div className="text-2xl font-bold">$125.00</div>
+          <div className="text-2xl font-bold">${amount}</div>
         </div>
         <div className="space-y-4 md:space-y-6 lg:space-y-8">
           <div className="flex items-center justify-between">
