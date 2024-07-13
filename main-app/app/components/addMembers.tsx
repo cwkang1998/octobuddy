@@ -101,9 +101,9 @@ export default function AddMembers() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-1"
           />
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => router.push('/contacts')}>
             <PlusIcon className="w-4 h-4" />
-            Add New Contact
+            Add New Contact            
           </Button>
         </div>
         <div className="grid gap-4">
