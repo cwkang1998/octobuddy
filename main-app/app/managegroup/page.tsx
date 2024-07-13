@@ -1,7 +1,5 @@
-import ManageGroup from '../components/manageGroup'
- 
+import ManageGroup from "../components/manageGroup";
+
 export default function Page() {
-    return (
-        <ManageGroup />
-    )
+	return <ManageGroup />;
 }

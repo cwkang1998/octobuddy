@@ -1,18 +1,15 @@
-'use client';
+"use client";
 
-import CreateGroup from "./components/createGroup";
-import ManageGroup from "./components/manageGroup";
-import InvitedLink from "./components/invitedLink";
+import Link from "next/link";
 import ContactsList from "./components/contacts";
-import Dashboard from "./dashboard";
-import RecentTransactions from "./components/recentTransactions";
+import CreateGroup from "./components/createGroup";
 import GroupTransactions from "./components/groupTxn";
-import Link from 'next/link'
 import Home from "./components/home";
+import InvitedLink from "./components/invitedLink";
+import ManageGroup from "./components/manageGroup";
+import RecentTransactions from "./components/recentTransactions";
+import Dashboard from "./dashboard";
 
 export default function Page() {
-  return (
-    <Home />
-
-  );
+	return <Home />;
 }

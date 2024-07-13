@@ -33,6 +33,6 @@ export const expense_users = pgTable("expense_users", {
 	expense_id: varchar("expense_id").references(() => expenses.id),
 	paying_address: varchar("paying_address"),
 	receiving_address: varchar("receiving_address"),
-  settled_date: timestamp("settled_date"),
+	settled_date: timestamp("settled_date"),
 	is_settled: boolean("is_settled").default(false),
 });

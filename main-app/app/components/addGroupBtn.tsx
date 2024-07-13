@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 export function AddGroupButton() {
-  return <Button>AddGroup</Button>
+	return <Button>AddGroup</Button>;
 }
