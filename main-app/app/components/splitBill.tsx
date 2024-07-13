@@ -5,24 +5,39 @@
  */
 "use client"
 
-import { SetStateAction, useState } from "react"
+import { SetStateAction, useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams  } from "next/navigation";
+import { Bill } from "../types/bill";
 
 export default function SplitBill() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+  const billAmount = searchParams.get('amount');
+  const billPurpose = searchParams.get('purpose');
+  const contactsEncoded = searchParams.get('contacts');
   const [splitMethod, setSplitMethod] = useState("equal")
-  const [members, setMembers] = useState([
-    { name: "John", amount: 0 },
-    { name: "Jane", amount: 0 },
-    { name: "Bob", amount: 0 },
-    { name: "Alice", amount: 0 },
-  ])
-  const [totalBill, setTotalBill] = useState(500)
+  
+
+  const [members, setMembers] = useState<{ name: string; amount: number; address: string }[]>([]);
+  const [totalBill, setTotalBill] = useState(0)
+
+  useEffect(() => {
+    
+
+    if (billAmount) {
+      setTotalBill(parseFloat(billAmount));
+    }
+    if (contactsEncoded) {
+      setMembers(JSON.parse(decodeURIComponent(contactsEncoded)).map((contact: any) => ({ ...contact, amount: 0 })));
+      
+    }
+  }, [billAmount, contactsEncoded]);
+
   const handleSplitMethodChange = (method: SetStateAction<string>) => {
     setSplitMethod(method)
   }
@@ -31,16 +46,38 @@ export default function SplitBill() {
     updatedMembers[index].amount = amount
     setMembers(updatedMembers)
   }
-  const handleTotalBillChange = (amount: SetStateAction<number>) => {
-    setTotalBill(amount)
-  }
+
   const calculateEqualShare = () => {
-    return totalBill / members.length
+    return totalBill / (members.length )
   }
   const calculateBalance = () => {
-    const totalContribution = members.reduce((acc, member) => acc + member.amount, 0)
-    return totalBill - totalContribution
-  }
+    const totalContribution = members.reduce((acc, member) => acc + member.amount, 0);
+    return totalBill - totalContribution;
+  };
+
+  const handleConfirmSplit = () => {
+
+    const myShare = splitMethod === "equal" ? calculateEqualShare() : members.find(member => member.name === "Me")?.amount || 0;
+    
+    const people = members.map(member => ({
+      name: member.name,
+      amount: splitMethod === "equal" ? calculateEqualShare() : member.amount,
+      address: member.address
+    }));
+
+    let amountDue = totalBill - myShare;
+ 
+
+    const newBill: Bill = {
+      description: billPurpose || "",
+      people,
+      amountDue
+    };
+
+    const billData = encodeURIComponent(JSON.stringify(newBill));
+    console.log(newBill);
+    router.push(`/?bill=${billData}`);
+  };
   return (
     <div className="w-full max-w-2xl mx-auto p-6 md:p-8">
       <div className="bg-background rounded-lg shadow-lg p-6 md:p-8">
@@ -66,16 +103,6 @@ export default function SplitBill() {
           </div>
         </div>
         <div className="mb-6">
-          <div className="flex items-center justify-between mb-2">
-            <Label htmlFor="total-bill">Total Bill</Label>
-            <Input
-              id="total-bill"
-              type="number"
-              value={totalBill}
-              onChange={(e) => handleTotalBillChange(parseFloat(e.target.value))}
-              className="w-32"
-            />
-          </div>
           <div className="bg-muted rounded-md p-4">
             <p className="text-lg font-bold">
               {splitMethod === "equal"
@@ -125,7 +152,7 @@ export default function SplitBill() {
           </div>
         </div>
         <div className="mt-6 flex justify-end">
-          <Button type="submit" onClick={() => router.push('/')}>Confirm Split</Button>
+          <Button type="submit" onClick={handleConfirmSplit}>Confirm Split</Button>
         </div>
       </div>
     </div>

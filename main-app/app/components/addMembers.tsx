@@ -11,7 +11,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function AddMembers() {
   const [contacts, setContacts] = useState([
@@ -48,8 +48,6 @@ export default function AddMembers() {
   ])
   const [selectedContacts, setSelectedContacts] = useState<{ id: number; name?: string; address?: string; avatar?: string }[]>([])
   const [searchTerm, setSearchTerm] = useState("")
-  const [splitMethod, setSplitMethod] = useState("even")
-  const [customSplits, setCustomSplits] = useState<{ [key: number]: number }>({})
   const filteredContacts = contacts.filter((contact) => contact.name.toLowerCase().includes(searchTerm.toLowerCase()))
   const toggleContact = (contact: { id: any; name?: string; address?: string; avatar?: string }) => {
     if (selectedContacts.includes(contact)) {
@@ -59,6 +57,22 @@ export default function AddMembers() {
     }
   }
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const billAmount = searchParams.get('amount') ?? '';
+  const billPurpose = searchParams.get('purpose') ?? '';
+
+  // const myInfo = {
+  //   id: 0,
+  //   name: "Me",
+  //   address: "0xMyAddress",
+  //   avatar: "/placeholder-user.jpg",
+  // };
+  
+  const handleSplitBill = () => {
+    const allMembers = [...selectedContacts];
+    const contactsEncoded = encodeURIComponent(JSON.stringify(allMembers));
+    router.push(`/splitbill?amount=${billAmount}&purpose=${encodeURIComponent(billPurpose)}&contacts=${contactsEncoded}`);
+  };
 
   return (
     <Card className="w-full max-w-3xl">
@@ -129,7 +143,7 @@ export default function AddMembers() {
         </div>
       </CardContent>
       <CardFooter>
-            <Button className="w-full" onClick={() => router.push('/splitbill')}>Split Bill</Button>
+            <Button className="w-full"onClick={handleSplitBill}>Split Bill</Button>
 
       </CardFooter>
     </Card>
