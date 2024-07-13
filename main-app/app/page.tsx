@@ -8,10 +8,11 @@ import Dashboard from "./dashboard";
 import RecentTransactions from "./components/recentTransactions";
 import GroupTransactions from "./components/groupTxn";
 import Link from 'next/link'
+import Home from "./components/home";
 
-export default function Home() {
+export default function Page() {
   return (
-    <h1>HomePage</h1>
+    <Home />
 
   );
 }
