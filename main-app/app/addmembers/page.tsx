@@ -1,5 +1,10 @@
+import { Suspense } from "react";
 import AddMembers from "../components/addMembers";
 
 export default function Page() {
-	return <AddMembers />;
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<AddMembers />
+		</Suspense>
+	);
 }
