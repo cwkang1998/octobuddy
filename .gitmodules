@@ -25,3 +25,6 @@
 [submodule "contracts2/lib/openzeppelin-contracts"]
 	path = contracts2/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "contracts2/lib/solidity-bytes-utils"]
+	path = contracts2/lib/solidity-bytes-utils
+	url = https://github.com/GNSPS/solidity-bytes-utils
