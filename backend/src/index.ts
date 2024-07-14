@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { db } from "./db";
 import { getPrivyTokenInfo } from "./request-auth";
 import { expense_users, expenses, user_contacts, users } from "./schema";
+import { authMiddleware } from "./middlewares";
 
 type UserCreateData = {
 	privyToken: string;
@@ -51,7 +52,7 @@ const main = async () => {
 		}
 	});
 
-	app.get("/expenses", async (req, res) => {});
+	app.get("/expenses", authMiddleware, async (req, res) => {});
 };
 
 main()
