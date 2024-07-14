@@ -414,15 +414,18 @@ contract USDCMock_OFTScript is Script {
     }
 
 	function run_test() external {
-		vm.selectFork(scroll_sepolia);
+		// Setup (config fork, )
+		vm.selectFork(base_sepolia);
 		vm.startBroadcast(deployerPrivateKey);
 
+		USDCMock_OFT memory oft = usdc_base;
+
 		// Mint test tokens
-		usdc_scroll.mint(100000000000000000000);
+		oft.mint(100000000000000000000);
 
 		// Build SendParam and quote fees
 		SendParam memory sendParam = SendParam({
-			dstEid: eidSepolia,
+			dstEid: eidBaseSepolia,
 			to: bytes32(uint256(uint160(targetAddr))),
 			amountLD: 100000000000000000000,
 			minAmountLD: 100000000000000000000,
@@ -430,10 +433,10 @@ contract USDCMock_OFTScript is Script {
 			composeMsg: "",
 			oftCmd: ""
 		});
-		MessagingFee memory fee = usdc_scroll.quoteSend(sendParam, false);
+		MessagingFee memory fee = oft.quoteSend(sendParam, false);
 
 		// Try sending OFT
-		usdc_scroll.send{value: fee.nativeFee}(sendParam, fee, deployer);
+		oft.send{value: fee.nativeFee}(sendParam, fee, deployer);
 
 		vm.stopBroadcast();
 	}
