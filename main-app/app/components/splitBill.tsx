@@ -83,7 +83,7 @@ export default function SplitBill() {
 
 		const billData = encodeURIComponent(JSON.stringify(newBill));
 		console.log(newBill);
-		router.push(`/?bill=${billData}`);
+		router.push(`/home?bill=${billData}`);
 	};
 	return (
 		<div className="w-full max-w-2xl mx-auto p-6 md:p-8">
