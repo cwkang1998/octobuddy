@@ -26,6 +26,9 @@ contract USDCMock_OFTScript is Script {
 	uint32 private eidBaseSepolia = 40245;
 	uint32 private eidScrollSepolia = 40170;
 	uint32 private eidLineaSepolia = 40287;
+	uint32 private eidMorphTestnet = 40290;
+	uint32 private eidZircuitTestnet = 40275;
+	uint32 private eidAribitrumSepolia = 40231;
 
 	// Setup deployed contracts
 	USDCMock_OFT public usdc_sepolia = USDCMock_OFT(0x6C9834A1C679c6a156fe5071d6Fd3d3648efFB9f);
