@@ -19,3 +19,6 @@
 [submodule "contracts2/lib/LayerZero-v2"]
 	path = contracts2/lib/LayerZero-v2
 	url = https://github.com/LayerZero-Labs/LayerZero-v2
+[submodule "contracts2/lib/LayerZero"]
+	path = contracts2/lib/LayerZero
+	url = https://github.com/LayerZero-Labs/LayerZero
