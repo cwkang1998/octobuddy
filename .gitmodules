@@ -13,3 +13,6 @@
 [submodule "contracts/lib/solidity-bytes-utils"]
 	path = contracts/lib/solidity-bytes-utils
 	url = https://github.com/GNSPS/solidity-bytes-utils
+[submodule "contracts2/lib/forge-std"]
+	path = contracts2/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
