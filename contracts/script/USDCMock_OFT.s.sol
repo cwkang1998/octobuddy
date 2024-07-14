@@ -21,10 +21,11 @@ contract USDCMock_OFTScript is Script {
 	address private deployer = vm.addr(deployerPrivateKey);
 
 	// Setup OFT endpoints and parameters
-	address private lzEndpointBaseSepolia = 0x6EDCE65403992e310A62460808c4b910D972f10f;
-	address private lzEndpointSepolia = 0x6EDCE65403992e310A62460808c4b910D972f10f;
+	address private lzEndpointTestnets = 0x6EDCE65403992e310A62460808c4b910D972f10f;
 	uint32 private eidSepolia = 40161;
 	uint32 private eidBaseSepolia = 40245;
+	uint32 private eidScrollSepolia = 40170;
+	uint32 private eidLineaSepolia = 40287;
 
 	// Setup deployed contracts
 	USDCMock_OFT public usdc_sepolia = USDCMock_OFT(0x6C9834A1C679c6a156fe5071d6Fd3d3648efFB9f);
@@ -37,13 +38,13 @@ contract USDCMock_OFTScript is Script {
 		// Select fork of destination chain and deploy Base OFT
 		vm.selectFork(base_sepolia);
         vm.startBroadcast(deployerPrivateKey);
-		usdc_base = new USDCMock_OFT("USDC", "USDC", lzEndpointBaseSepolia, deployer);
+		usdc_base = new USDCMock_OFT("USDC", "USDC", lzEndpointTestnets, deployer);
 		vm.stopBroadcast();
 
 		// Select fork of source chain, deploy Sepolia OFT and set peer
 		vm.selectFork(sepolia);
 		vm.startBroadcast(deployerPrivateKey);
-        usdc_sepolia = new USDCMock_OFT("USDC", "USDC", lzEndpointSepolia, deployer);
+        usdc_sepolia = new USDCMock_OFT("USDC", "USDC", lzEndpointTestnets, deployer);
 		usdc_sepolia.setPeer(eidBaseSepolia, bytes32(uint256(uint160(address(usdc_base)))));
 		vm.stopBroadcast();
 
