@@ -8,7 +8,15 @@ libs = ["lib"]
 [rpc_endpoints]
 base_sepolia = "${BASE_SEPOLIA_URL}" 
 sepolia = "${SEPOLIA_URL}" 
+scroll_sepolia = "https://sepolia-rpc.scroll.io/"
+linea_sepolia = "${LINEA_SEPOLIA_URL}"
 
 [etherscan]
 base_sepolia = { key = "${BASESCAN_SEPOLIA_KEY}", url="https://api-sepolia.basescan.org/api" }
 sepolia = { key = "${ETHERSCAN_SEPOLIA_KEY}", url="https://api-sepolia.etherscan.io/api" }
+linea_sepolia = { key = "${LINEASCAN_SEPOLIA_KEY}", url="https://api-sepolia.lineascan.build/api" }
+scroll_sepolia = { key = "${SCROLLSCAN_SEPOLIA_KEY}", url="https://api-sepolia.scrollscan.com/api" }
+
+[profile.blockscout]
+base_sepolia = { url="https://base-sepolia.blockscout.com/api" }
+sepolia = { url="https://eth-sepolia.blockscout.com/api" }
