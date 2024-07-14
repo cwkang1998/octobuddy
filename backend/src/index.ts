@@ -1,10 +1,10 @@
-import express from "express";
 import cors from "cors";
+import express from "express";
 
-import { getPrivyTokenInfo } from "./request-auth";
-import { db } from "./db";
-import { expense_users, expenses, user_contacts, users } from "./schema";
 import { eq } from "drizzle-orm";
+import { db } from "./db";
+import { getPrivyTokenInfo } from "./request-auth";
+import { expense_users, expenses, user_contacts, users } from "./schema";
 
 type UserCreateData = {
 	privyToken: string;
@@ -51,8 +51,7 @@ const main = async () => {
 		}
 	});
 
-	app.get("/expenses", async (req, res) => {
-	})
+	app.get("/expenses", async (req, res) => {});
 };
 
 main()

@@ -9,7 +9,6 @@ import ManageGroup from "./components/manageGroup";
 import RecentTransactions from "./components/recentTransactions";
 import Dashboard from "./dashboard";
 
-
 export default function Page() {
 	return <Home />;
 }
