@@ -418,7 +418,7 @@ contract USDCMock_OFTScript is Script {
 		vm.selectFork(base_sepolia);
 		vm.startBroadcast(deployerPrivateKey);
 
-		USDCMock_OFT memory oft = usdc_base;
+		USDCMock_OFT oft = usdc_base;
 
 		// Mint test tokens
 		oft.mint(100000000000000000000);

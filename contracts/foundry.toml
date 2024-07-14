@@ -4,3 +4,19 @@ out = "out"
 libs = ["lib"]
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+
+[rpc_endpoints]
+base_sepolia = "${BASE_SEPOLIA_URL}" 
+sepolia = "${SEPOLIA_URL}" 
+scroll_sepolia = "https://sepolia-rpc.scroll.io/"
+linea_sepolia = "${LINEA_SEPOLIA_URL}"
+morph_sepolia = "https://rpc-testnet.morphl2.io"
+zircuit_testnet = "https://zircuit1.p2pify.com"
+arbitrum_sepolia = "${ARBITRUM_SEPOLIA_URL}"
+
+[etherscan]
+base_sepolia = { key = "${BASESCAN_SEPOLIA_KEY}", url="https://api-sepolia.basescan.org/api" }
+sepolia = { key = "${ETHERSCAN_SEPOLIA_KEY}", url="https://api-sepolia.etherscan.io/api" }
+scroll_sepolia = { key = "${SCROLLSCAN_SEPOLIA_KEY}", url="https://api-sepolia.scrollscan.com/api" }
+linea_sepolia = { key = "${LINEASCAN_SEPOLIA_KEY}", url="https://api-sepolia.lineascan.build/api" }
+arbitrum_sepolia = { key = "${ARBISCAN_SEPOLIA_KEY}", url="https://api-sepolia.arbiscan.io/api" }
