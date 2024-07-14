@@ -22,3 +22,6 @@
 [submodule "contracts2/lib/LayerZero"]
 	path = contracts2/lib/LayerZero
 	url = https://github.com/LayerZero-Labs/LayerZero
+[submodule "contracts2/lib/openzeppelin-contracts"]
+	path = contracts2/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
