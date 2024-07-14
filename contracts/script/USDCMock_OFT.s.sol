@@ -15,6 +15,11 @@ contract USDCMock_OFTScript is Script {
 	// Build forks
 	uint256 public base_sepolia = vm.createSelectFork("base_sepolia");
 	uint256 public sepolia = vm.createSelectFork("sepolia");
+	uint256 public scroll_sepolia = vm.createSelectFork("scroll_sepolia");
+	uint256 public linea_sepolia = vm.createSelectFork("linea_sepolia");
+	uint256 public morph_sepolia = vm.createSelectFork("morph_sepolia");
+	uint256 public zircuit_testnet = vm.createSelectFork("zircuit_testnet");
+	uint256 public arbitrum_sepolia = vm.createSelectFork("arbitrum_sepolia");
 
 	// Setup deployer
 	uint256 private deployerPrivateKey = vm.envUint("PRIVATE_KEY");
@@ -33,28 +38,81 @@ contract USDCMock_OFTScript is Script {
 	// Setup deployed contracts
 	USDCMock_OFT public usdc_sepolia = USDCMock_OFT(0x6C9834A1C679c6a156fe5071d6Fd3d3648efFB9f);
 	USDCMock_OFT public usdc_base = USDCMock_OFT(0x4C0b9173e3bd1F98D9E0de6Af63618A73A642BDa);
+	USDCMock_OFT public usdc_scroll;
+	USDCMock_OFT public usdc_linea;
+	USDCMock_OFT public usdc_morph;
+	USDCMock_OFT public usdc_zircuit;
+	USDCMock_OFT public usdc_arbitrum;
 
 	// Setup target address
 	address public targetAddr = 0xf1771f24BDD7123acceae534945E96ABC83bBb61;
 
 	function run() external {
-		// Select fork of destination chain and deploy Base OFT
+		// Select fork and deploy USDCMock_OFT
 		vm.selectFork(base_sepolia);
         vm.startBroadcast(deployerPrivateKey);
 		usdc_base = new USDCMock_OFT("USDC", "USDC", lzEndpointTestnets, deployer);
 		vm.stopBroadcast();
 
-		// Select fork of source chain, deploy Sepolia OFT and set peer
 		vm.selectFork(sepolia);
 		vm.startBroadcast(deployerPrivateKey);
         usdc_sepolia = new USDCMock_OFT("USDC", "USDC", lzEndpointTestnets, deployer);
-		usdc_sepolia.setPeer(eidBaseSepolia, bytes32(uint256(uint160(address(usdc_base)))));
 		vm.stopBroadcast();
 
-		// Select fork of destination chain and set peer on Sepolia OFT
+		vm.selectFork(scroll_sepolia);
+		vm.startBroadcast(deployerPrivateKey);
+        usdc_scroll = new USDCMock_OFT("USDC", "USDC", lzEndpointTestnets, deployer);
+		vm.stopBroadcast();
+
+		vm.selectFork(linea_sepolia);
+		vm.startBroadcast(deployerPrivateKey);
+        usdc_linea = new USDCMock_OFT("USDC", "USDC", lzEndpointTestnets, deployer);
+		vm.stopBroadcast();
+
+		vm.selectFork(morph_sepolia);
+		vm.startBroadcast(deployerPrivateKey);
+        usdc_morph = new USDCMock_OFT("USDC", "USDC", lzEndpointTestnets, deployer);
+		vm.stopBroadcast();
+
+		vm.selectFork(zircuit_testnet);
+		vm.startBroadcast(deployerPrivateKey);
+        usdc_zircuit = new USDCMock_OFT("USDC", "USDC", lzEndpointTestnets, deployer);
+		vm.stopBroadcast();
+
+		vm.selectFork(arbitrum_sepolia);
+		vm.startBroadcast(deployerPrivateKey);
+        usdc_arbitrum = new USDCMock_OFT("USDC", "USDC", lzEndpointTestnets, deployer);
+		vm.stopBroadcast();
+
+		// Select fork and set peer 
 		vm.selectFork(base_sepolia);
 		vm.startBroadcast(deployerPrivateKey);
 		usdc_base.setPeer(eidSepolia, bytes32(uint256(uint160(address(usdc_sepolia)))));
+		usdc_base.setPeer(eidScrollSepolia, bytes32(uint256(uint160(address(usdc_scroll)))));
+		usdc_base.setPeer(eidLineaSepolia, bytes32(uint256(uint160(address(usdc_linea)))););
+		usdc_base.setPeer(eidMorphTestnet, bytes32(uint256(uint160(address(usdc_morph)))));
+		usdc_base.setPeer(eidZircuitTestnet, bytes32(uint256(uint160(address(usdc_zircuit)))));
+		usdc_base.setPeer(eidAribitrumSepolia, bytes32(uint256(uint160(address(usdc_arbitrum)))));
+		vm.stopBroadcast();
+
+		vm.selectFork(sepolia);
+		vm.startBroadcast(deployerPrivateKey);
+		usdc_sepolia.setPeer(eidBaseSepolia, bytes32(uint256(uint160(address(usdc_base)))));
+		usdc_sepolia.setPeer(eidScrollSepolia, bytes32(uint256(uint160(address(usdc_scroll)))));
+		usdc_sepolia.setPeer(eidLineaSepolia, bytes32(uint256(uint160(address(usdc_linea)))););
+		usdc_sepolia.setPeer(eidMorphTestnet, bytes32(uint256(uint160(address(usdc_morph)))));
+		usdc_sepolia.setPeer(eidZircuitTestnet, bytes32(uint256(uint160(address(usdc_zircuit)))));
+		usdc_sepolia.setPeer(eidAribitrumSepolia, bytes32(uint256(uint160(address(usdc_arbitrum)))));
+		vm.stopBroadcast();
+
+		vm.selectFork(scroll_sepolia);
+		vm.startBroadcast(deployerPrivateKey);
+		usdc_scroll.setPeer(eidBaseSepolia, bytes32(uint256(uint160(address(usdc_base)))));
+		usdc_scroll.setPeer(eidSepolia, bytes32(uint256(uint160(address(usdc_sepolia)))));
+		usdc_scroll.setPeer(eidLineaSepolia, bytes32(uint256(uint160(address(usdc_linea)))););
+		usdc_scroll.setPeer(eidMorphTestnet, bytes32(uint256(uint160(address(usdc_morph)))));
+		usdc_scroll.setPeer(eidZircuitTestnet, bytes32(uint256(uint160(address(usdc_zircuit)))));
+		usdc_scroll.setPeer(eidAribitrumSepolia, bytes32(uint256(uint160(address(usdc_arbitrum)))));
 		vm.stopBroadcast();
 
 		// Select fork of source chain
