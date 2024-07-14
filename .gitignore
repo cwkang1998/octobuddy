@@ -1,1 +1,9 @@
 node_modules/
+
+.venv
+
+**/db.sqlite3
+
+**/dist
+
+**/tsconfig.tsbuildinfo
