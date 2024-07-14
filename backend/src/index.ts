@@ -52,7 +52,13 @@ const main = async () => {
 		}
 	});
 
-	app.get("/expenses", authMiddleware, async (req, res) => {});
+	app.get("/expenses", authMiddleware, async (req, res) => {
+		
+	});
+
+	app.post("/expenses", authMiddleware, async (req, res) => {
+
+	});
 
 	return app.listen(30303, () => {
 		console.log("Server running at port 30303");

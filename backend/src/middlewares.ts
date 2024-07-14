@@ -23,6 +23,8 @@ export const authMiddleware = async (
 			.where(eq(users.id, privyData.userId));
 
 		if (isUserExist) {
+			req.user = privyData.userId;
+			
 			return next();
 		}
 		return next(new Error("Unauthorized`"));
